@@ -1,0 +1,7 @@
+\section{The \texttt{Mandel} module}
+Now it is time for us to recursively create a Mandelbrot set. 
+I generate our set row-wise: meaning we generate a row left to right, then move to the next line and generate another row. 
+I do this by first defining a function, \texttt{gen\_width/2} that takes in the \texttt{width} and \texttt{height} for our entire set, a row variable to keep track of what rows we have made, the \texttt{trans/2} function and a \texttt{depth} parameter.
+We make generous use of our \texttt{Brod} and \texttt{Colour} modules to create a 2-dimensional array. Each element in this array represents a pixel in our final image.
+
+\input{code_snippets/mandel_rows}

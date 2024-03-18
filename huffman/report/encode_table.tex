@@ -1,0 +1,45 @@
+\section{Generating the code table}
+Let us first discuss how the coding table is generated before we discuss the tree.
+
+At this point in our code, we already have a frequency map. We can make use of our \texttt{Mapper.min\_pop/1} (or \texttt{Mapper.max\_pop/1} as well) and use the key to traverse through the tree to find the code. Sounds like a lot of gibberish? Allow me to explain.
+
+\begin{itemize}
+    \item We start with the \texttt{encode\_table/3} method. This function calls the \\ \texttt{traverse/3} method.
+    \item Now \texttt{traverse/3} can either return a \texttt{:code} tuple or a \texttt{:no\_match} tuple. But when do each of them occur? Let's find out.
+    \item The \texttt{encode\_table/3} calls \texttt{traverse/3} by passing an empty string as the \texttt{code} and the entire Huffman tree (how that tree is generated is to be discussed)
+    \item First thing \texttt{traverse/3} does is it takes the left branch \\ and calls \texttt{traverse/3} on it (RECURSION!). This recursive call continues the traversal down the left path.
+    \item As the traversal down the left path continues, there comes a time when we encounter a \texttt{:node}. If this node matches the key that we are looking for, then we returns the \texttt{:code} tuple. Otherwise we return a \texttt{:no\_match tuple}.
+    \item BUT WEIGHT! Recursive traversal creates an implicit stack. When we return a \texttt{:no\_match} tuple, this is caught by the \texttt{traverse/3} method (which was higher in the stack) which then calls \texttt{traverse/3} again on the right branch.
+\end{itemize}
+
+By design, a \texttt{:node} is placed on the left side of a \texttt{:leaf}. On the right side of the \texttt{:leaf} can either be another \texttt{:node} or another \texttt{:leaf}.
+
+\begin{lstlisting}[language=Elixir, title=Huffman coding]
+defmodule Huffman do
+  def encode_table(_, freq, encoding_map) when freq == %{} do
+    encoding_map
+  end
+  def encode_table tree, freq, encoding_map do
+    {{k, _}, map} = Mapper.min_pop(freq)
+    case traverse("", k, tree) do
+      {:code, code} ->
+        encoding_map = Map.put(encoding_map, k, code)
+        encode_table(tree, map, encoding_map)
+      {:no_match} -> {:error, "what the fuck?"}
+    end
+  end
+  def traverse(code, to_find, {:node, to_find}) do
+    {:code, code}
+  end
+  def traverse(_, _, {:node, _}) do
+    {:no_match}
+  end
+  def traverse(code, to_find, {:leaf, _, left, right}) do
+    case traverse(code <> "0", to_find, left) do
+      {:code, code} -> {:code, code}
+      {:no_match} -> traverse(code <> "1", to_find, right)
+    end
+  end
+  ...
+end
+\end{lstlisting}

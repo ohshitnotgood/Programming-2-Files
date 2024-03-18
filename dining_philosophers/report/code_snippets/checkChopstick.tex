@@ -1,0 +1,13 @@
+\begin{lstlisting}[language=Elixir, title=Check if a chopstick pair is available for request]
+def checkChopstickPairAvailability(map, c1, c2) do
+  case Map.get(map, c1) do
+    :taken -> :sad_face
+
+    :available ->
+      case Map.get(map, c2) do
+        :taken -> :sad_face
+        :available -> :ok
+      end
+  end
+end
+\end{lstlisting}

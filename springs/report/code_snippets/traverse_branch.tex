@@ -1,0 +1,5 @@
+\begin{lstlisting}[language=Elixir, caption=Example of how a branch is traversed]
+def traverse_branch({:n, :un, left, {:n, nil}}, {:d, clue, c_in, rw, res}, stack) do
+    traverse(left, {:d, clue, c_in, 0, res <> "."}, Stack.push(stack, {:st_el, {:n, :b, {:n, nil}, {:n, nil}}, rw, res}))
+  end
+\end{lstlisting}

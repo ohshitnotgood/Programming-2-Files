@@ -1,0 +1,9 @@
+\begin{lstlisting}[language=Elixir, caption=Generating maps]
+defp generate_map map, {_, _, 0} do
+  map
+end
+  
+defp generate_map map, {dest, src, f_length} do
+  generate_map Map.put(map, src, dest), {dest + 1, src + 1, f_length - 1}
+end
+\end{lstlisting}

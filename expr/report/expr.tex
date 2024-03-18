@@ -1,0 +1,56 @@
+\section{\texttt{Expr} class}
+We use recursion on this task. We have five functions: \texttt{eval/2}, \texttt{add/2}, \texttt{sub/2}, \texttt{mul/2} and \texttt{divide/2}.
+
+
+\texttt{eval/2} is called recursively until we reach a \texttt{\{:num, val\}} at which point arithmetic operations are done.
+
+
+
+\begin{lstlisting}[language=Elixir, caption=For loop that executes each term ]
+defmodule Expr do
+    def eval({:num, n}, _) do
+        {:num, n}
+    end
+    
+    def eval({:var, x}, env) do
+        Map.get(env, x)
+    end
+    
+    def eval({:add, arg0, arg1}, env) do
+        add(eval(arg0, env), eval(arg1, env))
+    end
+    
+    def eval({:sub, arg0, arg1}, env) do
+        sub(eval(arg0, env), eval(arg1, env))
+    end
+
+    ...
+      
+      
+\end{lstlisting}
+
+There are 6 instances of \texttt{eval/2}: one for returning a \texttt{:num} tuple, one for looking up a variable in our environment and the other four for calculating arithmetic operations.
+
+
+\begin{lstlisting}[language=Elixir, caption=For loop that executes each term ]
+defmodule Expr do
+    ...  
+  
+    def add({:num, f1}, {:num, f2}) do
+      {:num, f1 + f2}
+    end
+  
+  
+    def sub({:num, f1}, {:num, f2}) do
+      {:num, f1 - f2}
+    end
+
+    def divide({:num, f1}, {:num, f2}) do
+      simplify({:q, f1, f2})
+    end
+
+    ...
+end  
+\end{lstlisting}
+
+We also have functions that will simplify our rational tuple. We can achieve this by first calculating the highest common factor of our numerator and our denominator and then dividing both sides of our fraction with that value.

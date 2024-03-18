@@ -1,0 +1,13 @@
+\begin{lstlisting}[language=Elixir, title=How message handling is implemented]
+def run(requestMap, availabilityMap) do
+  receive do
+    {:request, cat, hunger, c1, c2, cattoPid} ->
+      requestMap = handleRequests(requestMap, cat, hunger, c1, c2, cattoPid)
+      serveRequest(requestMap, availabilityMap)
+
+    {:return, c1, c2} ->
+      a = handleReturns(availabilityMap, c1, c2)
+      serveRequest(requestMap, a)
+  end
+end
+\end{lstlisting}

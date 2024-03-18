@@ -1,0 +1,14 @@
+\begin{lstlisting}[language=Elixir, caption=Simple LIFO stack]
+defmodule Stack do
+  def push(stack, {:node, nil}) do {stack, nil} end
+  def push(stack, a) do
+    id = length(stack) + 1
+    {[{:s_el, id, a} | stack], id}
+  end
+  def pop([]) do {:stack_empty, []} end
+  def pop(from_stack) do
+    [head | tail] = from_stack
+    {head, tail}
+  end
+end
+\end{lstlisting}

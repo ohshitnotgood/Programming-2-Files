@@ -1,0 +1,26 @@
+\section{The \texttt{Mapper} module}
+The \texttt{Mapper} is a specialised module with two functions: (a) \texttt{max\_pop/1} which returns the character with the most occurrences and \texttt{min\_pop/1} which does the opposite and returns the least occurring character.
+
+Both functions performs a pop operation meaning the item is removed from the map. Returned is a tuple, with a tuple containing the key-value, and the remaining map.
+
+\pagebreak
+\begin{lstlisting}[language=Elixir, caption=Mapper module]
+defmodule Mapper do
+  def max_pop(a) when a == %{} do
+    {nil, %{}}
+  end
+  def max_pop(a) do
+    {key, value} = Enum.max_by(a, fn {_, x} -> x end)
+    {_, returning_map} = Map.pop(a, key)
+    {{key, value}, returning_map}
+  end
+  def min_pop(a) when a == %{} do
+    {nil, %{}}
+  end
+  def min_pop(a) do
+    {key, value} = Enum.min_by(a, fn {_, x} -> x end)
+    {_, returning_map} = Map.pop(a, key)
+    {{key, value}, returning_map}
+  end
+end
+\end{lstlisting}

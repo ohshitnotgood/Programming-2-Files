@@ -1,0 +1,13 @@
+\section{But first, the parser!}
+The parser isn't very difficult to implement either. The pattern and the clue is separated with a space. Splitting there leaves us with, well, the pattern and the clue. 
+
+The clue can then be parsed in to a list. Throughout this report, we will be using \texttt{clue} to call this list and \texttt{clue\_index} to denote the element of the clue we are currently looking at. This will become more relevant in the future.
+
+We can parse the pattern into a binary tree using the following steps:
+\begin{itemize}
+    \item Go through every character in our pattern (which is a string)
+    \item Use a \texttt{case} to check if it is working or unknown
+    \item Two branches if a node is unknown, left branch if it is working, right branch if it is not working
+\end{itemize}
+
+This leaves us with a perfectly balanced binary tree (not that we care much about balancing) if we look from the root of the tree.

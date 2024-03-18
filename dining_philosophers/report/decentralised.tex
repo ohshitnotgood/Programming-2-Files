@@ -1,0 +1,17 @@
+\section{The decentralised solution}
+The decentralised solution involves not a kernel but rather every chopstick being it's own process.
+
+The cats can send requests to the chopsticks on the side.
+We can allow our cats to send requests for them simultaneously. 
+
+In Elixir, functions with the same name (regardless of it's signature or parameters) share the same PID\@.
+
+This means in our method where we wait for our left chopstick to send a response message, we do not need to fire another message to the left chopstick.
+
+\texttt{send\(:pending\)} sends a message to the chopstick process and waits for a response (through the thread-blocking \texttt{receive} block). If it receives a message from the left chopstick first, it calls \texttt{send\(:left\_ok\)} to now begin a wait for a response from the right chopstick. 
+
+If the first chopstick (whichever it may be) does not approve the request, we resend all our messages.
+
+On some occasions, resending messages might cause the chopstick to send two response messages, the second message would appear as though the chopstick is unavailable. But we wouldn't have to care much about that because our cat would be way on it's journey of eating and sleeping.
+
+\input{code_snippets/decentral_send}

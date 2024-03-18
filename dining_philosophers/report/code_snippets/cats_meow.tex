@@ -1,0 +1,24 @@
+\begin{lstlisting}[language=Elixir, title=How our cat brain works]
+def meow(cat, krnlPID, c1, c2, food, base_hngr, hngr, laziness) do
+  # request chopsticks
+  send(krnlPID, {:request, cat, hngr, c1, c2, self()})
+
+  # thread-blocking
+  receive do
+    :denied ->
+      meow(cat, krnlPID, c1, c2, food, base_hngr, hngr - 1, laziness)
+
+    {:approved, c1, c2} ->
+      :timer.sleep(1)
+
+      # return chopsticks
+      send(krnlPID, {:return, c1, c2})
+
+      # start thinking 
+      :timer.sleep(laziness)
+
+      # thinking over, back to eating
+      meow(cat, krnlPID, c1, c2, food - 1,  base_hngr, base_hngr, laziness)
+  end
+end
+\end{lstlisting}

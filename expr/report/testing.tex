@@ -1,0 +1,8 @@
+\section{Testing}
+We can express the equation $\frac{x}{y} + 4xy$ where $x = 5$ and $y = 3$ with
+\begin{lstlisting}[language=Elixir, caption=Testing our expression module ]
+env = Environment.new([{:x, {:num, 5}}, {:y, {:num, 3}}])
+    
+expression = {:add, {:div, {:var, :x}, {:var, :y}}, {:mul, {:mul, {:var, :x}, {:var, :y}}, {:num, 4}}}
+\end{lstlisting}
+which gives us \texttt{\{:q, 165, 3\}} as a result.

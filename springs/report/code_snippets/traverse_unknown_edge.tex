@@ -1,0 +1,5 @@
+\begin{lstlisting}[language=Elixir, caption=Edge case ignoring the right branch]
+def traverse_branch({:n, :u, l, _}, {clue, ci, true}, {_, _}, {rw_pat, res, _}, stack) do
+  update_clue(l, {clue, ci, true}, {0, false}, working_res(rw_pat, res), stack)
+end
+\end{lstlisting}

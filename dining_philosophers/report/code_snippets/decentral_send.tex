@@ -1,0 +1,33 @@
+\begin{lstlisting}[language=Elixir, title=Requesting for chopsticks in a decentralised environment]
+# if we receive msg from left chopstick first
+def send(:left_ok, c1, c2, c1Pid, c2Pid, b_hngr hngr) do
+  receive do
+    {c2, :approve} -> eat(); return(); sleep()
+      send(:pending, c1, c2, c1Pid, c2Pid, b_hngr, hngr)
+    {c2, :denied} ->
+      send(:pending, c1, c2, c1Pid, c2Pid, b_hngr, hngr - 1)
+  end
+end
+# if we receive msg from right chopstick first
+def send(:right_ok, c1, c2, c1Pid, c2Pid, b_hngr, hngr) do
+  receive do
+    {c1, :approve} ->
+      eat()
+      return()
+      sleep()
+      send(:pending, c1, c2, c1Pid, c2Pid, b_hngr, hngr)
+    {c1, :denied} ->
+      send(:pending, c1, c2, c1Pid, c2Pid, b_hngr, hngr - 1)
+  end
+end
+# if neither messages has been sent
+def send(:pending, c1, c2, c1Pid, c2Pid, b_hngr, hngr) do
+  send(c1Pid, {:request, self(), hngr})
+  send(c2Pid, {:request, self(), hngr})
+  receive do
+    {c1, :approve} -> send{:left_ok, c1, c2, c1Pid, c2Pid, b_hngr, hngr}
+    {c2, :approve} -> send{:right_ok, c1, c2, c1Pid, c2Pid, b_hngr, hngr}
+    {cpstckAtm, :denied} -> send{:pending, c1, c2, c1Pid, c2Pid, b_hngr, hngr - 1}
+  end
+end
+\end{lstlisting}

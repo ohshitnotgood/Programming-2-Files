@@ -1,0 +1,15 @@
+\begin{lstlisting}[language=Elixir, caption=Printing the entire rigamarole]
+def rigamarole do
+  Parser.parseSeeds() |> Enum.map(fn x -> String.to_integer(x) |> r() |> IO.inspect() end)
+end
+  
+def r x do
+  seed2soil = Parser.getSeed2Soil() |> Map.get(x, x)
+  soil2fart = Parser.getSoil2Fart() |> Map.get(seed2soil, seed2soil)
+  fart2water = Parser.getFart2Water() |> Map.get(soil2fart, soil2fart)
+  water2ljus = Parser.getWater2Ljus() |> Map.get(fart2water, fart2water)
+  ljus2temp = Parser.getLjus2Temp() |> Map.get(water2ljus, water2ljus)
+  temp2hum = Parser.getTemp2Hum() |> Map.get(ljus2temp, ljus2temp)
+  Parser.getHum2Pos() |> Map.get(temp2hum, temp2hum)
+end
+\end{lstlisting}

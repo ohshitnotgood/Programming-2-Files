@@ -1,0 +1,10 @@
+\section{Problem solved}
+At this point, we have already solved our problem. 
+
+But what if the element we are looking for does not exist in the map? Elixir's \texttt{Map.get/3} function allows us to provide a default value which we can take advantage of in situations where we do not require a mapping to take place.
+
+And then it's a series of pipe operations: getting a map result, passing it to the next map, loading the next map, getting the map result and repeat. Following listing provides a snippet.
+
+\input{code_snippets/print_rigamarole}
+
+We can store all the outputs in a list and find the lowest to get the lowest position. Boom, done!

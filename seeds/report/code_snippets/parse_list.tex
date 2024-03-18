@@ -1,0 +1,9 @@
+\begin{lstlisting}[language=Elixir, caption=Splitting the lists with newlines and commas]
+defp parseListOfLists filename do
+  case File.read(filename) do
+    {:ok, data} ->
+        Enum.filter(Enum.map(String.split(data, "\n"), fn x -> String.split(x, ",") end), fn x -> x != [""] end)
+    {:error, msg} -> {:error, msg}
+  end
+end
+\end{lstlisting}

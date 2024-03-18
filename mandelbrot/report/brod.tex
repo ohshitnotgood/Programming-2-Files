@@ -1,0 +1,7 @@
+\section{The \texttt{Brod} module}
+For no other reason, we will call our module \texttt{Brod} instead of \texttt{Brot}.
+The \texttt{mandelbrot/2} method is called recursively. On our first call, we take in \texttt{m} to specify the max iteration and we decrement this every iteration.
+
+We use \texttt{Cmplx.abs/2} to check if the absolute of our complex number is greater than 2, in which case, we can stop checking and return the number of iterations it took us to get here.
+
+\input{code_snippets/brod_mandel}

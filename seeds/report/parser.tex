@@ -1,0 +1,18 @@
+\section{Parser}
+\subsection{Parsing the trojan horse}
+Provided was a CSV file in the format of a txt file. 
+Trivial implementation. Easier solution: split every section into it's own file and load each file individually.
+
+\subsection{Parsing lists}
+We are faced with clues that are separated by new lines where we can split our string to get a list of clues. Further splitting over the commas and converting each element in our list into an integer using \texttt{String.to\_integer()} and we have the list that we want.
+
+\input{code_snippets/parse_list}
+
+We will also convert every `inner list' into a tuple to help us in our pattern matching.
+
+\subsection{Generating our map}
+Generating our map can be done very easily using recursion. We take in a map and a tuple (with our destination, source and range parameters) and recursively add new elements to our maps.
+
+Every iteration, we decrement our range until we have we reach \texttt{range == 0}.
+
+\input{code_snippets/generate_map}

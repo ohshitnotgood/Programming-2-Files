@@ -1,0 +1,8 @@
+\section{Benchmarking}
+Benchmarking such an application is quite tricky. The benchmark questions provided are, as I would argue, moot for this case since a lot of the issues with deadlocking are eliminated by the kernel sending a success/fail message allowing the cats to wait indefinitely.
+
+The system, as mentioned before, is scalable. Since we have implemented a min-priority queue, we can even drop in a new cat on the fly. 
+
+For benchmark's sake, we add a \texttt{sleep} after every \texttt{:denied} request from the kernel. This would decrease our throughput throughout the system although make it more energy-efficient (if we even care about it). It certainly would not make it more memory since every \texttt{:denied} request is discarded from the queue.
+
+To be more aggressive would mean to lower the hunger values for each cat. This would hardly affect the overall system time performance although it may cause some of the lower hunger valued cats to finish eating quicker with the risk of them dying in the process.

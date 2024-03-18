@@ -1,0 +1,76 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{hyperref}
+\usepackage{soul}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstdefinelanguage{elixir}{
+	morekeywords={case,catch,def,do,else,false,%
+		use,alias,receive,timeout,defmacro,defp,%
+		for,if,import,defmodule,defprotocol,%
+		nil,defmacrop,defoverridable,defimpl,%
+		super,fn,raise,true,try,end,with,%
+		unless},
+	otherkeywords={<-,->},
+	sensitive=true,
+	morecomment=[l]{\#},
+	morecomment=[n]{/*}{*/},
+	morestring=[b]",
+	morestring=[b]',
+	morestring=[b]"""
+}
+
+\lstset{style=mystyle}
+
+\title{Five cats}
+\author{Praanto Samadder}
+
+
+\begin{document}
+\maketitle
+
+\input{thinkers}
+\input{processes}
+\input{katnel}
+\input{cats}
+\input{benchmark}
+\input{decentralised}
+
+\end{document}

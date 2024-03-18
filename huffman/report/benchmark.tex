@@ -1,0 +1,15 @@
+\section{Benchmark? No no. Performance}
+The following table shows the number of bits that it takes to represent the entire provided text. Somehow the lazy method takes more bits to represent the text than the original (?)
+This could indicate that my implementation of the `lazy' method is incorrect. But the table also makes it apparent that the `smart' way of generating the Huffman tree allows us to reduce the file size by almost half. 
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Format} & \textbf{Size (bits)} \\ \hline
+ASCII           & 2 670 520            \\ \hline
+UTF-8           & 2 670,528            \\ \hline
+Lazy            & 2,766,721            \\ \hline
+Smart           & 1,483,422            \\ \hline
+\end{tabular}
+\end{table}

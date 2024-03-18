@@ -1,0 +1,15 @@
+\section{The \texttt{Cmplx} module}
+The \texttt{Cmplx} module was implemented to handle complex numbers. For our purposes, complex numbers can be represented using tuples.
+\begin{equation*}
+     \texttt{c = \{real, imaginary\}}
+\end{equation*}
+
+\subsection{Adding and squaring two complex numbers}
+Trivial implementation that can be achieved by summing the real and imaginary parts (separately). On the instance that we receive 0 as a parameter, for \texttt{sqr/1} we return \texttt{\{0, 0\}}.
+
+\input{code_snippets/cmplx_add_sqr}
+
+\pagebreak
+\subsection{Absolutes a complex number}
+\texttt{abs/1} always returns a number. As instructed, I make use of the \texttt{:math.sqrt/1} module.
+\input{code_snippets/cmplx_abs}

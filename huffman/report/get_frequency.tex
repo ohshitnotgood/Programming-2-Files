@@ -1,0 +1,20 @@
+\section{Frequency counter}
+We start by counting the frequency of each character. Implementation becomes trivial once we use a map. We can split our charlist into cons cells, then check if the character exists in our map. If it does, we increment it's corresponding counter, otherwise add the character to our list.
+
+\begin{lstlisting}[language=Elixir, title=Frequency]
+defmodule Frequency do
+  def freq(sample) do
+    freq(String.to_charlist(sample), Map.new())
+  end
+  def freq([], freq) do
+    freq
+  end
+  def freq([char | rest], freq) do
+    char_freq = Map.get(freq, <<char::utf8>>, 0)
+    freq = Map.put(freq, <<char::utf8>>, char_freq + 1)
+    freq(rest, freq)
+  end
+end
+\end{lstlisting}
+
+We also make use of the \texttt{<<char::utf8>>} notation to ensure our keys in the map are characters and not binary. This allowed for easier debugging.

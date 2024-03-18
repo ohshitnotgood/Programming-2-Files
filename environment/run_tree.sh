@@ -1,0 +1,2 @@
+clear
+elixir EnvTree.ex

@@ -1,0 +1,12 @@
+\begin{lstlisting}[language=Elixir]
+def mandelbrot(_, _, _, 0) do 0 end
+def mandelbrot(z, c, m, dci) do
+  case Cmplx.abs(z) > 2 do
+    true ->
+      m - (dci - 1)
+    false ->
+      mandelbrot(Cmplx.add(c, Cmplx.sqr(z)), c, m, dci - 1)
+  end
+end
+def mandelbrot(c, m) do mandelbrot(0, c, m, m) end
+\end{lstlisting}

@@ -1,0 +1,28 @@
+\section{The \texttt{Katnel}}
+The \texttt{Katnel} (which works like a kernel) works like a kernel. The \texttt{Katnel} handles chopstick requests and returns. The cats, when sending a message, also send \texttt{self()} which is a reference to their own process ID to allow the kernel to send a message back.
+
+\subsection{Handling messages}
+The \texttt{Katnel} handles two types of messages: chopstick requests and chopstick returns. Cats send messages for chopsticks in pair, although they are kept track of individually.
+
+We make use of two maps: \texttt{requestMap} and \texttt{availabilityMap}. Request map is a map storing all the requests \texttt{Katnel} has received from the cats. We first store it in our queue before we pick the request with the lowest hunger (i.e. highest chance of dying) to serve first. We use the \texttt{handleRequest/2} to to add to our stack and \texttt{serveRequest/2} to send a message to the appropriate process. The cats, within their message also send their own PIDs (as \texttt{self(())}) which allows the kernel to send responses. 
+
+Once a request has been dealt with, the request is removed from the queue. This may risk the chance of the cat dying however due to the nature of the algorithm, that particular cat will soon be sending back another request that we can serve in the next round of calls.
+
+The \texttt{availabilityMap} is a map of all the chopsticks and their availability. Each chopstick can either be \texttt(:taken) or \texttt{:available}, denoted by an atom. We make use of the \texttt{checkChopstickAvailability/3} method to determine if we can even approve this request.
+
+
+\input{code_snippets/katnel_receive}
+
+\subsection{Keeping track of the chopsticks}
+The chopsticks can be kept track of by using a chopstick map. When a cat requests to borrow a pair of chopsticks, the \texttt{Katnel} checks if those particular chopstick(s) are \texttt{:available}. If they are, well, life's good. The chopsticks are borrowed. If the chopsticks are \texttt{:taken} however, well sucks to be you I guess.
+
+\input{code_snippets/checkChopstick}
+
+\subsection{Dealing with request messages}
+When a cat sends a message requesting a chopstick, their request is first placed in a min-priority queue. After it has been placed there, the cat with the lowest hunger value is served first. This hunger value is the same value as the \textit{strength} value in the problem PDF.If the hunger value of a cat reaches 0, well, the cat dies.
+
+\input{code_snippets/handle_request}
+
+Determining the lowest hunger value in a map is trivial when using the \texttt{Enum.min/2} method.
+
+When a cat sends a message to return a pair of chopsticks, the chopsticks map is updated making them now available for requests.

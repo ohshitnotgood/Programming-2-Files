@@ -1,0 +1,31 @@
+\section{Dealing with edge cases}
+
+\subsection{End of list}
+There are a handful of edge cases that we must encounter.
+
+First, when happens when we reach the end of the tree?
+
+Well, that's a simple solution for now. The end of the tree will likely have a \texttt{null} node. At that point, we can simply pull from our stack and traverse the node that we have in our stack.
+
+We can also handle the case where are stack is also empty i.e.\ we must end our program.
+
+\subsection{When we have matched a clue}
+This is not the case where we have matched a pattern.
+Matching a clue is when our clue says we must have three broken springs in a row and we do get three broken springs in a row.
+
+We have been maintaining a \texttt{row} variable for that which we can use to check for that. If the number of rows have been reached, we can reset row to 0, and increment our \texttt{clue\_index}.
+
+\subsection{Clue overflow?}
+When happens when the \texttt{clue\_index == length(clue)}? Well, we have already matched our pattern. From now on, we can only accept working hot springs. 
+
+If we encounter any unknown hot spring, we must purposefully take the left branch without bothering with the stack. 
+
+If we encounter a broken hot spring, then our solution so far has not been a correct one and thus we must discard this solution and start over from our latest stack position.
+
+\subsection{Time4Bureaucracy?}
+We can assume that we have encountered a correct solution when all of the following are met:
+\begin{itemize}
+    \item We have encountered a \texttt{nil} node
+    \item \texttt{clue\_index == length(clue)}
+    \item \texttt{length(result) == length(raw\_pattern)} where \texttt{raw\_pattern} is the string pattern before we parsed it.
+\end{itemize}

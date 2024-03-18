@@ -1,0 +1,20 @@
+\begin{lstlisting}[language=Elixir, title=Serving request with the lowest hunger value]
+# place in queue
+def handleRequests(rqMap, cat, hunger, c1, c2, cattoPid) do
+  Map.put(rqMap, cat, {hunger, cattoPid, c1, c2})
+end
+
+# serve lowest hunger
+def serveRequest(updatedMap, csaMap) do
+  {{key, {_, cattoPid, c1, c2}}, map} = getLowestIn(updatedMap)
+  case checkChopstickPairAvailability(csaMap, c1, c2) do
+    :sad_face ->
+      send(cattoPid, :denied)
+      run(map, csaMap)
+    :ok ->
+      csaMap = Map.put(csaMap, c1, :taken) |> Map.put(c2, :taken)
+      send(cattoPid, {:approved, c1, c2})
+      run(map, csaMap)
+  end
+end
+\end{lstlisting}

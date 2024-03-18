@@ -1,0 +1,34 @@
+\section{Encoding and decoding our text}
+Now comes the part to encode and decode our plaintext.
+
+\subsection{Encoding}
+Encoding involves taking each character and replacing it with the code from our coding table. That's it.
+
+
+\subsection{Decoding}
+Decoding requires traversal of our tree. We take the first bit of our encoded text and traverse appropriately (left for 0, right for 1). We continue this until we reach a \texttt{:node} at which point we take the next bit but this time we restart from the top of the tree. We pass a \texttt{root} argument which is an unmodified copy of our tree that allows us to begin from the start.
+
+Notice how we pattern match for 48 and 49 as they are ASCII for "0" and "1".
+
+\begin{lstlisting}[language=Elixir, title=Decoding]
+defmodule Huffman do  
+    def decode [], _, _, decoded_text do
+    decoded_text
+  end
+
+  def decode [48 | tail], {:leaf, v, l, _}, root, decoded_text do
+    case l do
+      {:node, k} -> decode(tail, root, root, decoded_text <> k)
+      leaf -> decode(tail, leaf, root, decoded_text)
+    end
+  end
+
+  def decode [49 | tail], {:leaf, v, _, r}, root, decoded_text do
+    case r do
+      {:node, k} -> decode(tail, root, root, decoded_text <> k)
+      leaf -> decode(tail, leaf, root, decoded_text)
+    end
+  end
+  ...
+end
+\end{lstlisting}

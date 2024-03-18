@@ -1,0 +1,16 @@
+\section{Cats}
+How do our \st{philosophers} cats maintain a work-life balance? Through message passing of course!
+
+Each cat has a food value (how much they need to eat before they are full), a hunger value (when hunger becomes 0, they die), and a laziness value (how long they \st{sleep} think before they must eat again).
+
+A cat makes a request to the kernel and awaits a response (via the thread-blocking \texttt{receive} method). If the request is \texttt{:denied}, hunger is decremented and \texttt{meow/8} is called again to form a recursive loop.
+If a request is \texttt{:approved} however, the cat spends some time eating (for 1 millisecond for our demonstration), then spends some time sleeping before requesting the \texttt{Katnel} again for chopsticks.
+
+Notable that the \texttt{receive} block is thread-blocking so our cat does nothing while it waits for an answer from the server. Maybe it should've spend some time doing some thinking while it waited. 
+
+Finally when the food value reaches 0, the cat is done eating and can notify the kernel about it's termination.
+
+\pagebreak
+\input{code_snippets/cats_meow}
+
+Notable is that with this way of implementation, our algorithm is scalable. Meaning we can add more cats without changing the structure of our algorithm.

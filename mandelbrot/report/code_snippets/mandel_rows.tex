@@ -1,0 +1,14 @@
+\begin{lstlisting}[language=Elixir]
+def rows(_, 0, _, _, row) do row end
+def rows(width, height, trans, depth, row) do
+  new_row = gen_width(width, height, [], trans, depth)
+  rows(width, height - 1, trans, depth, row ++ [new_row])
+end
+def gen_width(0, _, r, _, _) do r end
+def gen_width(width, height, r, trans, depth) do
+  complex = trans.(width, height)
+  i = Brod.mandelbrot(complex, depth)
+  colour = Colour.convert(i, depth)
+  gen_width(width - 1, height, [ colour | r], trans, depth)
+end
+\end{lstlisting}

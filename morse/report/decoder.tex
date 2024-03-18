@@ -1,0 +1,54 @@
+\section{The Elixir way}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/base}
+\end{figure}
+Our morse code can have three characters: `\texttt{?.}', `\texttt{?-}' and `\texttt{? }'. The period representing a short beep, take right, the dash representing a long beep, take left, the whitespace representing end of character, repeat.
+
+Therefore, we can expand our \texttt{decode/5} method to account for a period
+\begin{lstlisting}[language=Elixir]
+def decode([?- | rest], {:node, char, left, _}, root, _, msg) do
+  decode(rest, left, root, char, msg)
+end
+\end{lstlisting}
+and a dash
+\begin{lstlisting}[language=Elixir]
+def decode([?. | rest], {:node, char, _, right}, root, _, msg) do
+  decode(rest, right, root, char, msg)
+end
+\end{lstlisting}
+and a whitespace
+\begin{lstlisting}[language=Elixir]
+def decode([32 | rest], {:node, char, _, _}, root, _, msg) do
+  msg = msg <> <<char::utf8>>
+  decode(rest, root, root, "", msg)
+end
+\end{lstlisting}
+
+When we encounter a whitespace, of course we have to append our character to the message. We then keep passing this message around as it travels through the recursive path of hell.
+
+However, we do encounter a small edge case: when our `child' character is \texttt{:na}. This, as mentioned in the instructions, is a dummy character and thus, we discard. Commence Elixir pattern matching
+\begin{lstlisting}[language=Elixir]
+def decode([32 | rest], {:node, :na, _, _}, root, _, message) do
+  decode(rest, root, root, "", message)
+end    
+\end{lstlisting}
+
+\section{The encoder}
+The encoder is very trivial to implement. Recursively loop through the plaintext and replace each character with it's morse code equivalent followed by a whitespace. 
+
+\section{Final answers}
+The final two texts are
+\begin{equation*}
+    \texttt{all your bases are belong to us}
+\end{equation*}
+and
+\begin{equation*}
+    \texttt{https://www.youtube.com/watch?v=d\%51w4w9\%57g\%58c\%51}
+\end{equation*}
+which is a link Rick Astley's hit song Never Gonna Give You Up (how dare you rickroll us like that?!).
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{img/meme}
+    \caption{My reaction}
+\end{figure}
